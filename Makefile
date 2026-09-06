@@ -1,5 +1,5 @@
 TARGET       := libatshogi_oex_bin.so
-SRC          := atshogi_usi_engine-v12.cpp
+SRC          := atshogi_usi_engine-v15.cpp
 OUT_DIR      := build
 
 ANDROID_NDK_HOME ?= $(HOME)/android-ndk-r26b

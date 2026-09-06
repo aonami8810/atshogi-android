@@ -1,6 +1,6 @@
 #!/bin/bash
 # ==============================================================================
-# ATShogi ➡ ATShogi-Android (AArch64) 一気通貫自動ビルド＆自動配備スクリプト (v20)
+# ATShogi ➡ ATShogi-Android (AArch64) 一気通貫自動ビルド＆自動配備スクリプト (v23)
 # ==============================================================================
 set -e
 
@@ -11,13 +11,13 @@ export ASSETS_DIR="$WINDOWS_PROJECT_DIR/app/src/main/assets"
 export JNI_LIBS_DIR="$WINDOWS_PROJECT_DIR/app/src/main/jniLibs/arm64-v8a"
 
 echo "===================================================================="
-echo "    ATShogi-OM Extreme V20: Fully Autonomous Build & Deploy Pipeline"
+echo "    ATShogi-OM Extreme V23: Fully Autonomous Build & Deploy Pipeline"
 echo "===================================================================="
 
-# 1. Makefile を使用してクロスコンパイル、定跡検証、転送、およびハッシュ動的比較を完全自律実行
-make -f Makefile-v20 clean
-make -f Makefile-v20 deploy_all
+# Makefile-v23 を用いてクロスコンパイル、アセットハッシュ検証を実行
+make -f Makefile-v23 clean
+make -f Makefile-v23 deploy_all
 
 echo "===================================================================="
-echo "    Deploy Pipeline (v20) Complete! Ready for Android Studio Run."
+echo "    Deploy Pipeline (v23) Complete! Ready for Android Studio Run."
 echo "===================================================================="
