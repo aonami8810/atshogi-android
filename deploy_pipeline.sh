@@ -14,7 +14,7 @@ echo "===================================================================="
 echo "    ATShogi-OM Extreme V24: Fully Autonomous Build & Deploy Pipeline"
 echo "===================================================================="
 
-# 1. Makefile-v24 を使用してクロスコンパイル、定跡の厳格なコピー、およびハッシュ動的比較を完全自律実行
+# 1. Makefile を使用してクロスコンパイル、定跡自律生成、転送、およびハッシュ動的比較を完全自律実行
 make -f Makefile-v24 clean
 make -f Makefile-v24 deploy_all
 

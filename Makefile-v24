@@ -40,13 +40,13 @@ deploy_joseki:
 	@echo "===================================================================="
 	@if [ ! -f "static_joseki.bin" ]; then \
 		echo "🚨 ERROR: 本物の static_joseki.bin がカレントディレクトリに存在しません！"; \
-		echo "  Windows版の完全定跡データ（1,048,576 バイト、65,536レコード）をここに配置してください。"; \
+		echo "  Windows版の完全定跡データ（1,048,576 バイト）をここに配置してください。"; \
 		exit 1; \
 	fi
 	@SRC_SIZE=`stat -c%s "static_joseki.bin" 2>/dev/null || stat -f%z "static_joseki.bin"`; \
 	if [ "$$SRC_SIZE" -ne 1048576 ]; then \
 		echo "🚨 ERROR: 配置された定跡データのファイルサイズが不正確です ($$SRC_SIZE bytes)。"; \
-		echo "  本物の Windows版完全定跡データ（1,048,576 バイト、65,536レコード）を正確に配置してください。"; \
+		echo "  本物の Windows版完全定跡データ（1,048,576 バイト）を正確に配置してください。"; \
 		exit 1; \
 	fi
 	@SRC_HASH=`sha256sum "static_joseki.bin" | awk '{print $$1}'`; \

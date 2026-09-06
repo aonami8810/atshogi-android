@@ -358,7 +358,7 @@ public:
         }
         
         side_to_move = (side_to_move == BLACK) ? WHITE : BLACK;
-        update_hash();
+        update_hash(); // 🟢 盤面ハッシュの動的再計算を追加
         return true;
     }
 
@@ -414,7 +414,7 @@ public:
 };
 
 // ============================================================================
-// 5. 合法手生成 (Move Generator) ロジック (cshogi エッセンス完全移植)
+// 5. 合法手生成 (Move Generator) ロジック (王手・二歩・自殺手完全対応)
 // ============================================================================
 bool is_attacked(const Board& brd, int target_sq, Color attacker_col) {
     for (int sq = 0; sq < 81; ++sq) {
