@@ -1,0 +1,83 @@
+TARGET       := libatshogi_oex_bin.so
+SRC          := atshogi_usi_engine-v12.cpp
+OUT_DIR      := build
+
+ANDROID_NDK_HOME ?= $(HOME)/android-ndk-r26b
+API              ?= 33
+TARGET_ARCH      := aarch64-linux-android
+TOOLCHAIN        := $(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/linux-x86_64
+NDK_CXX          := $(TOOLCHAIN)/bin/$(TARGET_ARCH)$(API)-clang++
+NDK_STRIP        := $(TOOLCHAIN)/bin/llvm-strip
+
+WINDOWS_PROJECT_DIR ?= /mnt/c/VS/Workspace/atshogi-android
+ASSETS_DIR          := $(WINDOWS_PROJECT_DIR)/app/src/main/assets
+JNI_LIBS_DIR        := $(WINDOWS_PROJECT_DIR)/app/src/main/jniLibs/arm64-v8a
+
+CXX_FLAGS        := -std=c++17 -O3 -ffast-math -Wall -static-libstdc++ -Wl,-z,max-page-size=65536 -fPIE -pie
+
+.PHONY: all clean local aarch64 deploy_joseki deploy_all
+
+all: local
+
+local:
+	@mkdir -p $(OUT_DIR)
+	g++ -std=c++17 -O3 -ffast-math -Wall $(SRC) -o $(OUT_DIR)/atshogi_usi_engine_local
+
+aarch64:
+	@mkdir -p $(OUT_DIR)
+	@if [ -d "$(ANDROID_NDK_HOME)" ]; then \
+		$(NDK_CXX) $(CXX_FLAGS) $(SRC) -o $(OUT_DIR)/$(TARGET) && \
+		$(NDK_STRIP) $(OUT_DIR)/$(TARGET) && \
+		echo "✔ Compiled Android AArch64 (PIE + Static) binary: $(OUT_DIR)/$(TARGET)"; \
+	else \
+		echo "🚨 Error: Android NDK not found at $(ANDROID_NDK_HOME)."; \
+		exit 1; \
+	fi
+
+deploy_joseki:
+	@echo "===================================================================="
+	@echo "    Verifying & Deploying static_joseki.bin (Authentic Only)"
+	@echo "===================================================================="
+	@if [ ! -f "static_joseki.bin" ]; then \
+		echo "🚨 ERROR: 本物の static_joseki.bin がカレントディレクトリに存在しません！"; \
+		echo "  Windows版の完全定跡データ（1,048,576 バイト）をここに配置してください。"; \
+		exit 1; \
+	fi
+	@SRC_SIZE=`stat -c%s "static_joseki.bin" 2>/dev/null || stat -f%z "static_joseki.bin"`; \
+	if [ "$$SRC_SIZE" -ne 1048576 ]; then \
+		echo "🚨 ERROR: 配置された定跡データのファイルサイズが不正確です ($$SRC_SIZE bytes)。"; \
+		echo "  本物の Windows版完全定跡データ（1,048,576 バイト）を正確に配置してください。"; \
+		exit 1; \
+	fi
+	@SRC_HASH=`sha256sum "static_joseki.bin" | awk '{print $$1}'`; \
+	echo "✔ Source verified: Size=$$SRC_SIZE bytes, SHA-256=$$SRC_HASH"; \
+	if [ -d "$(WINDOWS_PROJECT_DIR)" ]; then \
+		mkdir -p "$(ASSETS_DIR)"; \
+		cp "static_joseki.bin" "$(ASSETS_DIR)/static_joseki.bin"; \
+		DEST_HASH=`sha256sum "$(ASSETS_DIR)/static_joseki.bin" | awk '{print $$1}'`; \
+		echo "  -> Copied to: $(ASSETS_DIR)/static_joseki.bin"; \
+		echo "  -> Dest SHA-256: $$DEST_HASH"; \
+		if [ "$$SRC_HASH" = "$$DEST_HASH" ]; then \
+			echo "✔ SUCCESS: SHA-256 Hash is 100% IDENTICAL!"; \
+		else \
+			echo "🚨 ERROR: コピー前後のハッシュ値が一致しません！データが破損しています。"; \
+			exit 1; \
+		fi; \
+	else \
+		echo "🚨 ERROR: Windows Project Directory not found at: $(WINDOWS_PROJECT_DIR)"; \
+		exit 1; \
+	fi
+
+deploy_all: aarch64 deploy_joseki
+	@if [ -d "$(WINDOWS_PROJECT_DIR)" ]; then \
+		mkdir -p "$(JNI_LIBS_DIR)"; \
+		cp "$(OUT_DIR)/$(TARGET)" "$(JNI_LIBS_DIR)/$(TARGET)"; \
+		echo "✔ Successfully deployed $(TARGET) to $(JNI_LIBS_DIR)"; \
+		echo "🎉 All deployment processes completed successfully with strict verification!"; \
+	else \
+		echo "🚨 ERROR: Windows Project Directory not found."; \
+		exit 1; \
+	fi
+
+clean:
+	rm -rf $(OUT_DIR)

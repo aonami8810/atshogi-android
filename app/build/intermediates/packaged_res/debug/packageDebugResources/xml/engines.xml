@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engines>
+    <engine
+        name="ATShogi-OM-Extreme-V5"
+        filename="libatshogi_oex_bin.so"
+        binary="libatshogi_oex_bin.so"
+        author="aonami8810"
+        version="5.0.0"
+        description="Algebraic Topology &amp; C++17 Unified USI Engine"
+        assets="" />
+</engines>

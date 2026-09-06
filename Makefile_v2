@@ -1,0 +1,36 @@
+CXX = g++
+GHC = ghc
+
+CXXFLAGS = -O3 -mavx512f -std=c++17 -fPIC
+GHCFLAGS = -O2 -threaded
+
+SRC_CPP = src/cpp
+SRC_HS = src/haskell
+BUILD_DIR = build/host
+BIN_DIR = bin
+
+CPP_OBJS = \
+	$(BUILD_DIR)/tensor_sweeper_v2.o \
+	$(BUILD_DIR)/OrbifoldMorseAVX512.o \
+	$(BUILD_DIR)/CobordismBridge.o \
+	$(BUILD_DIR)/PersistentHomology.o
+
+all: dirs host_generate
+
+dirs:
+	mkdir -p $(BUILD_DIR) $(BIN_DIR)
+
+$(BUILD_DIR)/%.o: $(SRC_CPP)/%.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+host_generate: $(CPP_OBJS)
+	$(GHC) $(GHCFLAGS) -i$(SRC_HS) \
+		$(SRC_HS)/PersistentSafety.hs \
+		$(SRC_HS)/ParallelOmniGeneratorV2.hs \
+		$(SRC_HS)/SpectralEGTB.hs \
+		$(SRC_HS)/CobordismBridge.hs \
+		-main-is ParallelOmniGeneratorV2.main \
+		$(CPP_OBJS) -o $(BIN_DIR)/generate_omni_tensor -lstdc++
+
+clean:
+	rm -rf $(BUILD_DIR)/* $(BIN_DIR)/generate_omni_tensor $(SRC_HS)/*.hi $(SRC_HS)/*.o

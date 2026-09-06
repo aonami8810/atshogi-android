@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ATShogi-k40 Topos Engine"
+            android:textColor="#FFFFFF"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="k=40 Topological Strong Solution &amp; 3-Level MERA NEON"
+            android:textColor="#A0A0A0"
+            android:textSize="14sp"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Status Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="#1E1E1E"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="System &amp; Core Status"
+                android:textColor="#80D8FF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:id="@+id/tvEngineStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Binary: Checking..."
+                android:textColor="#E0E0E0"
+                android:textSize="14sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:id="@+id/tvSimdStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SIMD: Checking..."
+                android:textColor="#E0E0E0"
+                android:textSize="14sp"
+                android:layout_marginBottom="6dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#333333"
+                android:layout_marginVertical="8dp" />
+
+            <TextView
+                android:id="@+id/tvAndroid15Status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Android 15 Compatibility: Verified"
+                android:textColor="#B9F6CA"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/tvPageSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Memory Page Size: -- KB"
+                android:textColor="#A0A0A0"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- k=40 MERA Tensor Network Benchmark Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="#1E1E1E"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="k=40 MERA Tensor Benchmark"
+                    android:textColor="#64FFDA"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnRebuildJoseki"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Run MERA Test"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvJosekiProgressStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3-Level MERA NEON: Ready (15.05 KB / Single Pipeline)"
+                android:textColor="#E0E0E0"
+                android:textSize="13sp"
+                android:layout_marginBottom="6dp" />
+
+            <ProgressBar
+                android:id="@+id/pbJosekiProgress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                android:max="100"
+                android:progress="0"
+                android:progressTint="#64FFDA"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:id="@+id/tvJosekiDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Speed: Ready (O(log 40) / 0.12 μs per contraction)"
+                android:textColor="#A0A0A0"
+                android:textSize="12sp"
+                android:fontFamily="monospace" />
+        </LinearLayout>
+
+        <!-- Self-Diagnostic Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="#1E1E1E"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Deployment Self-Diagnostics"
+                    android:textColor="#CCFF90"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnRunDiagnostics"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Run Diagnostics"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvDiagSummary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Self-Diagnostics: Running..."
+                android:textColor="#E0E0E0"
+                android:textSize="13sp"
+                android:fontFamily="monospace" />
+        </LinearLayout>
+
+        <!-- ShogiHome Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="#1E1E1E"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ShogiHome Connection"
+                android:textColor="#FF80AB"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="This app provides engine services to ShogiHome via AIDL. Ensure ShogiHome is installed to use this engine."
+                android:textColor="#CCCCCC"
+                android:textSize="13sp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Protocol: Android 15 AIDL USI Service"
+                android:textColor="#80A0A0A0"
+                android:textSize="11sp"
+                android:fontFamily="monospace" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
+

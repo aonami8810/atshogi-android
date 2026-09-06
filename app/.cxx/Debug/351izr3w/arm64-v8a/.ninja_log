@@ -1,0 +1,24 @@
+# ninja log v5
+115	223	8079568877834164	CMakeFiles/atshogi_native.dir/CShogiTest.cpp.o	19270f8ca9db9880
+68	373	8079568879337035	CMakeFiles/atshogi_native.dir/GaifullinP2NEON.cpp.o	8642b3d06d19f40a
+98	380	8079568879407661	CMakeFiles/atshogi_native.dir/TaylorKernelNEON.cpp.o	d262f29760ae4afa
+22	746	8079568883016324	CMakeFiles/atshogi_native.dir/OrbifoldMorseNEON.cpp.o	835eedc4be87c2d0
+1	2550	8079568901038941	CMakeFiles/atshogi_native.dir/TopologicalAtlasEngine.cpp.o	68868b0b3754df16
+14	3335	8079568908867242	CMakeFiles/atshogi_native.dir/JniBridge.cpp.o	2f2aa5e1de847ed9
+3337	3723	8079568912760920	C:/VS/Workspace/atshogi-android/app/build/intermediates/cxx/Debug/351izr3w/obj/arm64-v8a/libatshogi_native.so	f0f2d38e5d9b4cca
+1	24	0	clean	783ee98371267ada
+132	360	8079571199050291	CMakeFiles/atshogi_native.dir/CShogiTest.cpp.o	19270f8ca9db9880
+73	516	8079571201177809	CMakeFiles/atshogi_native.dir/TaylorKernelNEON.cpp.o	d262f29760ae4afa
+91	561	8079571201628693	CMakeFiles/atshogi_native.dir/GaifullinP2NEON.cpp.o	8642b3d06d19f40a
+122	748	8079571203481471	CMakeFiles/atshogi_native.dir/OrbifoldMorseNEON.cpp.o	835eedc4be87c2d0
+7	1347	8079571209514145	CMakeFiles/atshogi_native.dir/TopologicalAtlasEngine.cpp.o	68868b0b3754df16
+20	1959	8079571215577651	CMakeFiles/atshogi_native.dir/JniBridge.cpp.o	2f2aa5e1de847ed9
+1959	2448	8079571220521346	C:/VS/Workspace/atshogi-android/app/build/intermediates/cxx/Debug/351izr3w/obj/arm64-v8a/libatshogi_native.so	f0f2d38e5d9b4cca
+0	25	0	clean	783ee98371267ada
+216	300	8079572338611267	CMakeFiles/atshogi_native.dir/CShogiTest.cpp.o	19270f8ca9db9880
+134	430	8079572339904070	CMakeFiles/atshogi_native.dir/TaylorKernelNEON.cpp.o	d262f29760ae4afa
+207	468	8079572340288120	CMakeFiles/atshogi_native.dir/GaifullinP2NEON.cpp.o	8642b3d06d19f40a
+170	607	8079572341674329	CMakeFiles/atshogi_native.dir/OrbifoldMorseNEON.cpp.o	835eedc4be87c2d0
+8	1061	8079572346191404	CMakeFiles/atshogi_native.dir/TopologicalAtlasEngine.cpp.o	68868b0b3754df16
+36	1592	8079572351447711	CMakeFiles/atshogi_native.dir/JniBridge.cpp.o	2f2aa5e1de847ed9
+1592	2108	8079572356634948	C:/VS/Workspace/atshogi-android/app/build/intermediates/cxx/Debug/351izr3w/obj/arm64-v8a/libatshogi_native.so	f0f2d38e5d9b4cca

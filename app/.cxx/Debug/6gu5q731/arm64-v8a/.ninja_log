@@ -1,0 +1,8 @@
+# ninja log v5
+157	314	8079680584295790	CMakeFiles/atshogi_native.dir/CShogiTest.cpp.o	940a30d6dd6d1a91
+113	434	8079680585461031	CMakeFiles/atshogi_native.dir/GaifullinP2NEON.cpp.o	bb5c430011c404fe
+124	468	8079680585837650	CMakeFiles/atshogi_native.dir/TaylorKernelNEON.cpp.o	bbd899bef776984f
+89	520	8079680586316976	CMakeFiles/atshogi_native.dir/OrbifoldMorseNEON.cpp.o	cf54ba026ed44f9
+1	803	8079680589111039	CMakeFiles/atshogi_native.dir/TopologicalAtlasEngine.cpp.o	2d2d5e0d9a25cbf5
+20	1294	8079680594000727	CMakeFiles/atshogi_native.dir/JniBridge.cpp.o	63406b2dd752f9d6
+1295	1854	8079680599607397	C:/VS/Workspace/atshogi-android/app/build/intermediates/cxx/Debug/6gu5q731/obj/arm64-v8a/libatshogi_native.so	6f298859bf8608c9

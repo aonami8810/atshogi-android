@@ -1,0 +1,1 @@
+C:\VS\Workspace\atshogi-android\app\build\intermediates\cxx\Debug\p6sh5w1g\obj\arm64-v8a

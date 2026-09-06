@@ -1,0 +1,17 @@
+R_DEF: Internal format may change without notice
+local
+drawable ic_launcher_foreground
+id btnRebuildJoseki
+id btnRunDiagnostics
+id pbJosekiProgress
+id tvAndroid15Status
+id tvDiagSummary
+id tvEngineStatus
+id tvJosekiDetails
+id tvJosekiProgressStatus
+id tvPageSize
+id tvSimdStatus
+layout activity_main
+mipmap ic_launcher
+mipmap ic_launcher_round
+xml engines

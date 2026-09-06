@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.atshogi.android.JosekiIntegrityTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-09-06T06:35:47.138Z" hostname="DESKTOP-4P2INDP" time="0.03">
+  <properties/>
+  <testcase name="testJosekiFileIntegrityAndNoAiFaking" classname="com.atshogi.android.JosekiIntegrityTest" time="0.028"/>
+  <system-out><![CDATA[]]>&#x1f389;<![CDATA[ [INTEGRITY SUCCESS] static_joseki.bin is clean & authentic!
+   -> Size: 1048576 bytes
+   -> SHA-256: 2d461770537f9be4e619a2057914f8bdb202c05bcf2f1568b0d430457106cb4b
+   -> Trailing Zero Check: PASS (0/1000 zeros)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,62 @@
+[
+{
+  "directory": "C:/VS/Workspace/atshogi-android/app/.cxx/Debug/3342c1c1/arm64-v8a",
+  "command": "C:\\Users\\Admin\\AppData\\Local\\Android\\Sdk\\ndk\\27.0.12077973\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=aarch64-none-linux-android26 --sysroot=C:/Users/Admin/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++17 -O3 -ffast-math -flto -fno-limit-debug-info  -fPIE -O3 -flto -ffast-math -D__ARM_NEON -std=gnu++17 -o CMakeFiles\\atshogi_engine.dir\\UsiMain.cpp.o -c C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\UsiMain.cpp",
+  "file": "C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\UsiMain.cpp"
+},
+{
+  "directory": "C:/VS/Workspace/atshogi-android/app/.cxx/Debug/3342c1c1/arm64-v8a",
+  "command": "C:\\Users\\Admin\\AppData\\Local\\Android\\Sdk\\ndk\\27.0.12077973\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang.exe --target=aarch64-none-linux-android26 --sysroot=C:/Users/Admin/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -fno-limit-debug-info  -fPIE -O3 -flto -ffast-math -D__ARM_NEON -std=gnu11 -o CMakeFiles\\atshogi_engine.dir\\cshogi_core.c.o -c C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\cshogi_core.c",
+  "file": "C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\cshogi_core.c"
+},
+{
+  "directory": "C:/VS/Workspace/atshogi-android/app/.cxx/Debug/3342c1c1/arm64-v8a",
+  "command": "C:\\Users\\Admin\\AppData\\Local\\Android\\Sdk\\ndk\\27.0.12077973\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=aarch64-none-linux-android26 --sysroot=C:/Users/Admin/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++17 -O3 -ffast-math -flto -fno-limit-debug-info  -fPIE -O3 -flto -ffast-math -D__ARM_NEON -std=gnu++17 -o CMakeFiles\\atshogi_engine.dir\\OrbifoldMorseNEON.cpp.o -c C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\OrbifoldMorseNEON.cpp",
+  "file": "C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\OrbifoldMorseNEON.cpp"
+},
+{
+  "directory": "C:/VS/Workspace/atshogi-android/app/.cxx/Debug/3342c1c1/arm64-v8a",
+  "command": "C:\\Users\\Admin\\AppData\\Local\\Android\\Sdk\\ndk\\27.0.12077973\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=aarch64-none-linux-android26 --sysroot=C:/Users/Admin/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++17 -O3 -ffast-math -flto -fno-limit-debug-info  -fPIE -O3 -flto -ffast-math -D__ARM_NEON -std=gnu++17 -o CMakeFiles\\atshogi_engine.dir\\TaylorKernelNEON.cpp.o -c C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\TaylorKernelNEON.cpp",
+  "file": "C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\TaylorKernelNEON.cpp"
+},
+{
+  "directory": "C:/VS/Workspace/atshogi-android/app/.cxx/Debug/3342c1c1/arm64-v8a",
+  "command": "C:\\Users\\Admin\\AppData\\Local\\Android\\Sdk\\ndk\\27.0.12077973\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=aarch64-none-linux-android26 --sysroot=C:/Users/Admin/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++17 -O3 -ffast-math -flto -fno-limit-debug-info  -fPIE -O3 -flto -ffast-math -D__ARM_NEON -std=gnu++17 -o CMakeFiles\\atshogi_engine.dir\\GaifullinP2NEON.cpp.o -c C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\GaifullinP2NEON.cpp",
+  "file": "C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\GaifullinP2NEON.cpp"
+},
+{
+  "directory": "C:/VS/Workspace/atshogi-android/app/.cxx/Debug/3342c1c1/arm64-v8a",
+  "command": "C:\\Users\\Admin\\AppData\\Local\\Android\\Sdk\\ndk\\27.0.12077973\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=aarch64-none-linux-android26 --sysroot=C:/Users/Admin/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++17 -O3 -ffast-math -flto -fno-limit-debug-info  -fPIE -O3 -flto -ffast-math -D__ARM_NEON -std=gnu++17 -o CMakeFiles\\atshogi_engine.dir\\EgtbMpsNEON.cpp.o -c C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\EgtbMpsNEON.cpp",
+  "file": "C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\EgtbMpsNEON.cpp"
+},
+{
+  "directory": "C:/VS/Workspace/atshogi-android/app/.cxx/Debug/3342c1c1/arm64-v8a",
+  "command": "C:\\Users\\Admin\\AppData\\Local\\Android\\Sdk\\ndk\\27.0.12077973\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=aarch64-none-linux-android26 --sysroot=C:/Users/Admin/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++17 -O3 -ffast-math -flto -fno-limit-debug-info  -fPIE -O3 -flto -ffast-math -D__ARM_NEON -std=gnu++17 -o CMakeFiles\\atshogi_engine.dir\\EgtbMmap.cpp.o -c C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\EgtbMmap.cpp",
+  "file": "C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\EgtbMmap.cpp"
+},
+{
+  "directory": "C:/VS/Workspace/atshogi-android/app/.cxx/Debug/3342c1c1/arm64-v8a",
+  "command": "C:\\Users\\Admin\\AppData\\Local\\Android\\Sdk\\ndk\\27.0.12077973\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=aarch64-none-linux-android26 --sysroot=C:/Users/Admin/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++17 -O3 -ffast-math -flto -fno-limit-debug-info  -fPIE -O3 -flto -ffast-math -D__ARM_NEON -std=gnu++17 -o CMakeFiles\\atshogi_engine.dir\\DecayKernel.cpp.o -c C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\DecayKernel.cpp",
+  "file": "C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\DecayKernel.cpp"
+},
+{
+  "directory": "C:/VS/Workspace/atshogi-android/app/.cxx/Debug/3342c1c1/arm64-v8a",
+  "command": "C:\\Users\\Admin\\AppData\\Local\\Android\\Sdk\\ndk\\27.0.12077973\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=aarch64-none-linux-android26 --sysroot=C:/Users/Admin/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++17 -O3 -ffast-math -flto -fno-limit-debug-info  -fPIE -O3 -flto -ffast-math -D__ARM_NEON -std=gnu++17 -o CMakeFiles\\atshogi_engine.dir\\BlunderDetector.cpp.o -c C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\BlunderDetector.cpp",
+  "file": "C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\BlunderDetector.cpp"
+},
+{
+  "directory": "C:/VS/Workspace/atshogi-android/app/.cxx/Debug/3342c1c1/arm64-v8a",
+  "command": "C:\\Users\\Admin\\AppData\\Local\\Android\\Sdk\\ndk\\27.0.12077973\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=aarch64-none-linux-android26 --sysroot=C:/Users/Admin/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++17 -O3 -ffast-math -flto -fno-limit-debug-info  -fPIE -O3 -flto -ffast-math -D__ARM_NEON -std=gnu++17 -o CMakeFiles\\atshogi_engine.dir\\EgtbCancellation.cpp.o -c C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\EgtbCancellation.cpp",
+  "file": "C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\EgtbCancellation.cpp"
+},
+{
+  "directory": "C:/VS/Workspace/atshogi-android/app/.cxx/Debug/3342c1c1/arm64-v8a",
+  "command": "C:\\Users\\Admin\\AppData\\Local\\Android\\Sdk\\ndk\\27.0.12077973\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=aarch64-none-linux-android26 --sysroot=C:/Users/Admin/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++17 -O3 -ffast-math -flto -fno-limit-debug-info  -fPIE -O3 -flto -ffast-math -D__ARM_NEON -std=gnu++17 -o CMakeFiles\\atshogi_engine.dir\\CobordismBridge.cpp.o -c C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\CobordismBridge.cpp",
+  "file": "C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\CobordismBridge.cpp"
+},
+{
+  "directory": "C:/VS/Workspace/atshogi-android/app/.cxx/Debug/3342c1c1/arm64-v8a",
+  "command": "C:\\Users\\Admin\\AppData\\Local\\Android\\Sdk\\ndk\\27.0.12077973\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=aarch64-none-linux-android26 --sysroot=C:/Users/Admin/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++17 -O3 -ffast-math -flto -fno-limit-debug-info  -fPIE -O3 -flto -ffast-math -D__ARM_NEON -std=gnu++17 -o CMakeFiles\\atshogi_engine.dir\\CShogiTest.cpp.o -c C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\CShogiTest.cpp",
+  "file": "C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\CShogiTest.cpp"
+}
+]

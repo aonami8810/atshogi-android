@@ -1,0 +1,27 @@
+{
+  "buildFiles": [
+    "C:\\VS\\Workspace\\atshogi-android\\app\\src\\main\\cpp\\CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "C:\\Users\\Admin\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+      "-C",
+      "C:\\VS\\Workspace\\atshogi-android\\app\\.cxx\\Debug\\3342c1c1\\arm64-v8a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "C:\\Users\\Admin\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+    "-C",
+    "C:\\VS\\Workspace\\atshogi-android\\app\\.cxx\\Debug\\3342c1c1\\arm64-v8a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "atshogi_engine::@6890427a1f51a3e7e1df": {
+      "artifactName": "atshogi_engine",
+      "abi": "arm64-v8a",
+      "output": "C:\\VS\\Workspace\\atshogi-android\\app\\build\\intermediates\\cxx\\Debug\\3342c1c1\\obj\\arm64-v8a\\libatshogi_engine.so",
+      "runtimeFiles": []
+    }
+  }
+}

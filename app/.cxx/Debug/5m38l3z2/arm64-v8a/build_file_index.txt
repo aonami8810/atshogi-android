@@ -1,0 +1,1 @@
+C:\VS\Workspace\atshogi-android\app\src\main\cpp\CMakeLists.txt

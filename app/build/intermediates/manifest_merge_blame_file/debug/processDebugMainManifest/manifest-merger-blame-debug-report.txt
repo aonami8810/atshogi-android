@@ -1,0 +1,202 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.atshogi.android"
+4    android:versionCode="14"
+5    android:versionName="1.0.13" >
+6
+7    <uses-sdk
+7-->INJECTED
+8        android:minSdkVersion="26"
+8-->INJECTED
+9        android:targetSdkVersion="35" />
+9-->INJECTED
+10
+11    <permission
+11-->[androidx.core:core:1.12.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\a199d1a1a0c85759fd23f5b64279975f\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
+12        android:name="com.atshogi.android.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+12-->[androidx.core:core:1.12.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\a199d1a1a0c85759fd23f5b64279975f\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
+13        android:protectionLevel="signature" />
+13-->[androidx.core:core:1.12.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\a199d1a1a0c85759fd23f5b64279975f\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
+14
+15    <uses-permission android:name="com.atshogi.android.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+15-->[androidx.core:core:1.12.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\a199d1a1a0c85759fd23f5b64279975f\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
+15-->[androidx.core:core:1.12.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\a199d1a1a0c85759fd23f5b64279975f\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
+16
+17    <application
+17-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:5:5-60:19
+18        android:allowBackup="true"
+18-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:6:9-35
+19        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+19-->[androidx.core:core:1.12.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\a199d1a1a0c85759fd23f5b64279975f\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
+20        android:debuggable="true"
+21        android:extractNativeLibs="true"
+21-->INJECTED
+22        android:icon="@mipmap/ic_launcher"
+22-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:7:9-43
+23        android:label="ATShogi-OM"
+23-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:8:9-35
+24        android:theme="@android:style/Theme.NoDisplay" >
+24-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:9:9-55
+25        <activity
+25-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:11:9-19:20
+26            android:name="com.atshogi.android.MainActivity"
+26-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:12:13-41
+27            android:configChanges="orientation|screenSize"
+27-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:14:13-59
+28            android:exported="true" >
+28-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:13:13-36
+29            <intent-filter>
+29-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:15:13-18:29
+30                <action android:name="android.intent.action.MAIN" />
+30-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:16:17-69
+30-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:16:25-66
+31
+32                <category android:name="android.intent.category.LAUNCHER" />
+32-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:17:17-77
+32-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:17:27-74
+33            </intent-filter>
+34        </activity>
+35
+36        <service
+36-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:21:9-59:19
+37            android:name="com.atshogi.android.EngineService"
+37-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:22:13-42
+38            android:exported="true" >
+38-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:23:13-36
+39            <intent-filter>
+39-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:24:13-28:29
+40                <action android:name="shogi.oex.ENGINE" />
+40-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:25:17-59
+40-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:25:25-56
+41                <action android:name="jp.co.plpl.shogidroid.action.ENGINE" />
+41-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:26:17-78
+41-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:26:25-75
+42                <action android:name="jp.shogidokoro.oex.ENGINE" />
+42-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:27:17-68
+42-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:27:25-65
+43            </intent-filter>
+44
+45            <meta-data
+45-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:30:13-32:57
+46                android:name="shogi.oex.engine.NAME"
+46-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:31:17-53
+47                android:value="ATShogi-OM Extreme V6" />
+47-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:32:17-54
+48            <meta-data
+48-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:33:13-35:46
+49                android:name="shogi.oex.engine.AUTHOR"
+49-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:34:17-55
+50                android:value="aonami8810" />
+50-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:35:17-43
+51            <meta-data
+51-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:36:13-38:70
+52                android:name="shogi.oex.engine.DESCRIPTION"
+52-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:37:17-60
+53                android:value="Topological Morse Shogi USI Engine" />
+53-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:38:17-67
+54            <meta-data
+54-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:40:13-42:57
+55                android:name="jp.co.plpl.shogidroid.engine.NAME"
+55-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:41:17-65
+56                android:value="ATShogi-OM Extreme V6" />
+56-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:42:17-54
+57            <meta-data
+57-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:43:13-45:46
+58                android:name="jp.co.plpl.shogidroid.engine.AUTHOR"
+58-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:44:17-67
+59                android:value="aonami8810" />
+59-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:45:17-43
+60            <meta-data
+60-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:46:13-48:70
+61                android:name="jp.co.plpl.shogidroid.engine.DESCRIPTION"
+61-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:47:17-72
+62                android:value="Topological Morse Shogi USI Engine" />
+62-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:48:17-67
+63            <meta-data
+63-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:50:13-52:57
+64                android:name="jp.shogidokoro.oex.engine.NAME"
+64-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:51:17-62
+65                android:value="ATShogi-OM Extreme V6" />
+65-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:52:17-54
+66            <meta-data
+66-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:53:13-55:46
+67                android:name="jp.shogidokoro.oex.engine.AUTHOR"
+67-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:54:17-64
+68                android:value="aonami8810" />
+68-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:55:17-43
+69            <meta-data
+69-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:56:13-58:70
+70                android:name="jp.shogidokoro.oex.engine.DESCRIPTION"
+70-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:57:17-69
+71                android:value="Topological Morse Shogi USI Engine" />
+71-->C:\VS\Workspace\atshogi-android\app\src\main\AndroidManifest.xml:58:17-67
+72        </service>
+73
+74        <provider
+74-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\fe8c772632207e9c4653f727f0fa2ac1\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+75            android:name="androidx.startup.InitializationProvider"
+75-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\fe8c772632207e9c4653f727f0fa2ac1\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
+76            android:authorities="com.atshogi.android.androidx-startup"
+76-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\fe8c772632207e9c4653f727f0fa2ac1\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
+77            android:exported="false" >
+77-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\fe8c772632207e9c4653f727f0fa2ac1\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
+78            <meta-data
+78-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\fe8c772632207e9c4653f727f0fa2ac1\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+79                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+79-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\fe8c772632207e9c4653f727f0fa2ac1\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
+80                android:value="androidx.startup" />
+80-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\fe8c772632207e9c4653f727f0fa2ac1\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
+81            <meta-data
+81-->[androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\Admin\.gradle\caches\9.5.0\transforms\1f3ca79093108ce0b30ab0436c41ef90\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:29:13-31:52
+82                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+82-->[androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\Admin\.gradle\caches\9.5.0\transforms\1f3ca79093108ce0b30ab0436c41ef90\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:30:17-78
+83                android:value="androidx.startup" />
+83-->[androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\Admin\.gradle\caches\9.5.0\transforms\1f3ca79093108ce0b30ab0436c41ef90\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:31:17-49
+84            <meta-data
+84-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
+85                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+85-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
+86                android:value="androidx.startup" />
+86-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
+87        </provider>
+88
+89        <receiver
+89-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
+90            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+90-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
+91            android:directBootAware="false"
+91-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
+92            android:enabled="true"
+92-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
+93            android:exported="true"
+93-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
+94            android:permission="android.permission.DUMP" >
+94-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
+95            <intent-filter>
+95-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
+96                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+96-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
+96-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
+97            </intent-filter>
+98            <intent-filter>
+98-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
+99                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+99-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
+99-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
+100            </intent-filter>
+101            <intent-filter>
+101-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
+102                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+102-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
+102-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
+103            </intent-filter>
+104            <intent-filter>
+104-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
+105                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+105-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
+105-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Admin\.gradle\caches\9.5.0\transforms\4117b6dace14b5d5949e1d76fb190ce0\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
+106            </intent-filter>
+107        </receiver>
+108    </application>
+109
+110</manifest>

@@ -1,0 +1,18 @@
+# ninja log v5
+3	333	8078745161814192	CMakeFiles/atshogi_simd.dir/JniBridge.cpp.o	d625204d7a7f9c45
+2	625	8078766982479344	CMakeFiles/atshogi_simd.dir/TopologicalAtlasEngine.cpp.o	abc211d0fccf25d7
+626	1039	8078766986643131	C:/VS/Workspace/atshogi-android/app/build/intermediates/cxx/Debug/4u53683a/obj/arm64-v8a/libatshogi_simd.so	7f868110acc0a8dd
+35	398	8078745162521973	CMakeFiles/atshogi_simd.dir/OrbifoldMorseNEON.cpp.o	c9e5f83131b54175
+98	391	8078745162425941	CMakeFiles/atshogi_simd.dir/TaylorKernelNEON.cpp.o	2d3e432c313a7a41
+66	338	8078745161926947	CMakeFiles/atshogi_simd.dir/GaifullinP2NEON.cpp.o	1bfe91f098073fd2
+3	586	8078766436905705	CMakeFiles/atshogi_simd.dir/CShogiCore.cpp.o	331ba15c6baf7faa
+27	483	8078768181648666	CMakeFiles/atshogi_simd.dir/CShogiTest.cpp.o	8879bba122382da8
+3	576	8078768182607895	CMakeFiles/atshogi_simd.dir/CShogiCore.cpp.o	331ba15c6baf7faa
+15	625	8078768183090936	CMakeFiles/atshogi_simd.dir/TopologicalAtlasEngine.cpp.o	abc211d0fccf25d7
+626	1043	8078768187176153	C:/VS/Workspace/atshogi-android/app/build/intermediates/cxx/Debug/4u53683a/obj/arm64-v8a/libatshogi_simd.so	f6c0e5b8e94e1e66
+3	749	8078770607928089	CMakeFiles/atshogi_simd.dir/JniBridge.cpp.o	d625204d7a7f9c45
+750	1306	8078770613469732	C:/VS/Workspace/atshogi-android/app/build/intermediates/cxx/Debug/4u53683a/obj/arm64-v8a/libatshogi_simd.so	f6c0e5b8e94e1e66
+2	591	8078772672220876	CMakeFiles/atshogi_simd.dir/JniBridge.cpp.o	d625204d7a7f9c45
+592	1030	8078772676563324	C:/VS/Workspace/atshogi-android/app/build/intermediates/cxx/Debug/4u53683a/obj/arm64-v8a/libatshogi_simd.so	f6c0e5b8e94e1e66
+4	645	8078773815066709	CMakeFiles/atshogi_simd.dir/CShogiCore.cpp.o	331ba15c6baf7faa
+646	1073	8078773819308902	C:/VS/Workspace/atshogi-android/app/build/intermediates/cxx/Debug/4u53683a/obj/arm64-v8a/libatshogi_simd.so	f6c0e5b8e94e1e66

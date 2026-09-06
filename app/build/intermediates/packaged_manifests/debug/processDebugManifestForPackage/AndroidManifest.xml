@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.atshogi.android"
+    android:versionCode="14"
+    android:versionName="1.0.13" >
+
+    <uses-sdk
+        android:minSdkVersion="26"
+        android:targetSdkVersion="35" />
+
+    <permission
+        android:name="com.atshogi.android.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.atshogi.android.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+
+    <application
+        android:allowBackup="true"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        android:debuggable="true"
+        android:extractNativeLibs="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="ATShogi-OM"
+        android:theme="@android:style/Theme.NoDisplay" >
+        <activity
+            android:name="com.atshogi.android.MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name="com.atshogi.android.EngineService"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="shogi.oex.ENGINE" />
+                <action android:name="jp.co.plpl.shogidroid.action.ENGINE" />
+                <action android:name="jp.shogidokoro.oex.ENGINE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="shogi.oex.engine.NAME"
+                android:value="ATShogi-OM Extreme V6" />
+            <meta-data
+                android:name="shogi.oex.engine.AUTHOR"
+                android:value="aonami8810" />
+            <meta-data
+                android:name="shogi.oex.engine.DESCRIPTION"
+                android:value="Topological Morse Shogi USI Engine" />
+            <meta-data
+                android:name="jp.co.plpl.shogidroid.engine.NAME"
+                android:value="ATShogi-OM Extreme V6" />
+            <meta-data
+                android:name="jp.co.plpl.shogidroid.engine.AUTHOR"
+                android:value="aonami8810" />
+            <meta-data
+                android:name="jp.co.plpl.shogidroid.engine.DESCRIPTION"
+                android:value="Topological Morse Shogi USI Engine" />
+            <meta-data
+                android:name="jp.shogidokoro.oex.engine.NAME"
+                android:value="ATShogi-OM Extreme V6" />
+            <meta-data
+                android:name="jp.shogidokoro.oex.engine.AUTHOR"
+                android:value="aonami8810" />
+            <meta-data
+                android:name="jp.shogidokoro.oex.engine.DESCRIPTION"
+                android:value="Topological Morse Shogi USI Engine" />
+        </service>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="com.atshogi.android.androidx-startup"
+            android:exported="false" >
+            <meta-data
+                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
+        <receiver
+            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+            android:directBootAware="false"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.DUMP" >
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

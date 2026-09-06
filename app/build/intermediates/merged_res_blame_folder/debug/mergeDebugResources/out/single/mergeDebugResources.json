@@ -1,0 +1,54 @@
+[
+    {
+        "merged": "com.atshogi.android.app-debug-35:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "com.atshogi.android.app-main-37:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.atshogi.android.app-debug-35:/drawable_ic_launcher_foreground.png.flat",
+        "source": "com.atshogi.android.app-main-37:/drawable/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.atshogi.android.app-debug-35:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.atshogi.android.app-main-37:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.atshogi.android.app-debug-35:/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "com.atshogi.android.app-main-37:/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.atshogi.android.app-debug-35:/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "com.atshogi.android.app-main-37:/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.atshogi.android.app-debug-35:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.atshogi.android.app-main-37:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.atshogi.android.app-debug-35:/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "com.atshogi.android.app-main-37:/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.atshogi.android.app-debug-35:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "com.atshogi.android.app-main-37:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.atshogi.android.app-debug-35:/xml_engines.xml.flat",
+        "source": "com.atshogi.android.app-main-37:/xml/engines.xml"
+    },
+    {
+        "merged": "com.atshogi.android.app-debug-35:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.atshogi.android.app-main-37:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.atshogi.android.app-debug-35:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "com.atshogi.android.app-main-37:/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.atshogi.android.app-debug-35:/layout_activity_main.xml.flat",
+        "source": "com.atshogi.android.app-main-37:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.atshogi.android.app-debug-35:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "com.atshogi.android.app-main-37:/mipmap-mdpi/ic_launcher_round.png"
+    }
+]

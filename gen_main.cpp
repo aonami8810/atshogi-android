@@ -1,0 +1,1 @@
+﻿extern "C" void atshogi_omni_generate_atlas(void* handle, const char* out_filepath, const char* unused_trunk); int main() { void* dummy = (void*)1; atshogi_omni_generate_atlas(dummy, "static_joseki.bin", "trunk.txt"); return 0; }

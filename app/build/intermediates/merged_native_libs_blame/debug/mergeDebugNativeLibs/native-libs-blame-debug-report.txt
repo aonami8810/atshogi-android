@@ -1,0 +1,2 @@
+lib/arm64-v8a/libatshogi_engine.so->Project
+lib/arm64-v8a/libatshogi_oex_bin.so->Project

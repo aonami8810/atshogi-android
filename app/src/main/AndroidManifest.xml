@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.atshogi.android">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="ATShogi-OM"
+        android:theme="@android:style/Theme.NoDisplay">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:configChanges="orientation|screenSize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".EngineService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="shogi.oex.ENGINE" />
+                <action android:name="jp.co.plpl.shogidroid.action.ENGINE" />
+                <action android:name="jp.shogidokoro.oex.ENGINE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="shogi.oex.engine.NAME"
+                android:value="ATShogi-OM Extreme V6" />
+            <meta-data
+                android:name="shogi.oex.engine.AUTHOR"
+                android:value="aonami8810" />
+            <meta-data
+                android:name="shogi.oex.engine.DESCRIPTION"
+                android:value="Topological Morse Shogi USI Engine" />
+
+            <meta-data
+                android:name="jp.co.plpl.shogidroid.engine.NAME"
+                android:value="ATShogi-OM Extreme V6" />
+            <meta-data
+                android:name="jp.co.plpl.shogidroid.engine.AUTHOR"
+                android:value="aonami8810" />
+            <meta-data
+                android:name="jp.co.plpl.shogidroid.engine.DESCRIPTION"
+                android:value="Topological Morse Shogi USI Engine" />
+
+            <meta-data
+                android:name="jp.shogidokoro.oex.engine.NAME"
+                android:value="ATShogi-OM Extreme V6" />
+            <meta-data
+                android:name="jp.shogidokoro.oex.engine.AUTHOR"
+                android:value="aonami8810" />
+            <meta-data
+                android:name="jp.shogidokoro.oex.engine.DESCRIPTION"
+                android:value="Topological Morse Shogi USI Engine" />
+        </service>
+    </application>
+</manifest>
