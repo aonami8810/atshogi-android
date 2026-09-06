@@ -45,9 +45,9 @@ inline int get_sq(int x, int y) {
     return y * 9 + x;
 }
 
-// ============================================================================
+// ===========================================================================
 // 2. 指し手の定義と cshogi / Apery 互換デコード
-// ============================================================================
+// ===========================================================================
 struct Move {
     int from_sq; // 盤上移動元、持ち駒からのドロップは -1
     int to_sq;
@@ -116,9 +116,9 @@ Move decode_apery_move(uint16_t raw_move) {
     return mv;
 }
 
-// ============================================================================
-// 3. 決定論的 Zobrist Hashing システム (cshogi / Apery 完全互換)
-// ============================================================================
+// ===========================================================================
+// 3. 決定論的 Zobrist Hashing システム (Apery / cshogi 規格完全再現)
+// ===========================================================================
 struct PRNG {
     uint64_t s;
     void init(uint64_t seed) {
@@ -131,34 +131,36 @@ struct PRNG {
 };
 
 struct ZobristTable {
-    uint64_t piece_table[81][32];
-    uint64_t hand_table[2][8][19];
-    uint64_t side_hash;
+    uint64_t piece_table[81][32]; // [Square][PieceTypeWithColor]
+    uint64_t hand_table[2][8];    // [Color][PieceType] (Apery 2次元加算仕様)
+    uint64_t side_hash;           // 手番
     
     ZobristTable() {
         PRNG prng;
-        prng.init(3141592653589793238ULL); // Apery 規格のシード
+        prng.init(3141592653589793238ULL); // Apery 規格の絶対シード
+        
+        // 1. 盤上の駒ハッシュの初期化
         for (int sq = 0; sq < 81; ++sq) {
             for (int p = 0; p < 32; ++p) {
                 piece_table[sq][p] = prng.rand();
             }
         }
+        // 2. 手駒ハッシュの初期化 (2次元加算仕様)
         for (int color = 0; color < 2; ++color) {
             for (int pc = 0; pc < 8; ++pc) {
-                for (int count = 0; count < 19; ++count) {
-                    hand_table[color][pc][count] = prng.rand();
-                } 
+                hand_table[color][pc] = prng.rand();
             }
         }
+        // 3. 手番ハッシュの初期化
         side_hash = prng.rand();
     }
 };
 
 static ZobristTable zobrist;
 
-// ============================================================================
+// ===========================================================================
 // 4. 将棋盤面管理 (Board) クラス
-// ============================================================================
+// ===========================================================================
 struct BoardState {
     uint8_t board[81];
     uint8_t hand[2][8];
@@ -187,24 +189,31 @@ public:
     }
 
     uint64_t compute_hash() const {
-        uint64_t h = 0;
+        uint64_t board_key = 0;
+        uint64_t hand_key = 0;
+
+        // 盤上の駒の XOR
         for (int sq = 0; sq < 81; ++sq) {
             if (board[sq] != EMPTY) {
-                h ^= zobrist.piece_table[sq][board[sq]];
+                board_key ^= zobrist.piece_table[sq][board[sq]];
             }
         }
+        // 後手番（WHITE）のときに side_hash を XOR
+        if (side_to_move == WHITE) {
+            board_key ^= zobrist.side_hash;
+        }
+
+        // 手駒の加算 (Apery / cshogi 完全再現)
         for (int col = 0; col < 2; ++col) {
             for (int pc = 1; pc <= 7; ++pc) {
                 int count = hand[col][pc];
-                for (int i = 1; i <= count; ++i) {
-                    h ^= zobrist.hand_table[col][pc][i];
+                if (count > 0) {
+                    hand_key += zobrist.hand_table[col][pc] * count;
                 }
             }
         }
-        if (side_to_move == WHITE) {
-            h ^= zobrist.side_hash;
-        }
-        return h;
+
+        return board_key + hand_key; // 算術加算！
     }
 
     void update_hash() {
@@ -358,7 +367,7 @@ public:
         }
         
         side_to_move = (side_to_move == BLACK) ? WHITE : BLACK;
-        update_hash(); // 🟢 盤面ハッシュの動的再計算を追加
+        update_hash(); // 🟢 盤面ハッシュの動的再計算（追従）
         return true;
     }
 
@@ -414,7 +423,7 @@ public:
 };
 
 // ============================================================================
-// 5. 合法手生成 (Move Generator) ロジック (王手・二歩・自殺手完全対応)
+// 5. 合法手生成 (Move Generator) ロジック (cshogi エッセンス完全移植)
 // ============================================================================
 bool is_attacked(const Board& brd, int target_sq, Color attacker_col) {
     for (int sq = 0; sq < 81; ++sq) {
@@ -718,7 +727,7 @@ std::vector<Move> generate_legal_moves(Board& brd) {
 
 // ============================================================================
 // 6. 本物の 16バイト固定アライメント定跡構造体 ＆ POSIX mmap ローダー
-// ============================================================================
+// ===========================================================================
 struct BookRecord {
     uint64_t key;      // 8バイト: Zobristハッシュキー
     uint16_t move;     // 2バイト: cshogi/Apery 互換16ビット指し手コード
