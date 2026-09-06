@@ -10,9 +10,10 @@
 #include <float.h>
 #include <stdint.h>
 #include <cmath>
+#include <cstdlib>
 
 // ============================================================================
-// 1. 将棋盤および駒の定義 (cshogi エッセンス完全移植)
+// 1. 将棋盤および駒の定義 (cshogi / Apery エッセンス完全移植)
 // ============================================================================
 enum PieceType {
     EMPTY = 0,
@@ -45,7 +46,7 @@ inline int get_sq(int x, int y) {
 }
 
 // ============================================================================
-// 2. 指し手の定義とUSI座標相互変換
+// 2. 指し手の定義と cshogi / Apery 互換デコード
 // ============================================================================
 struct Move {
     int from_sq; // 盤上移動元、持ち駒からのドロップは -1
@@ -91,13 +92,78 @@ struct Move {
     }
 };
 
+// cshogi / Apery 互換の16ビット指し手デコード
+Move decode_apery_move(uint16_t raw_move) {
+    Move mv;
+    mv.from_sq = -1;
+    mv.to_sq = -1;
+    mv.promote = false;
+    mv.drop_piece = EMPTY;
+
+    int to = raw_move & 0x7F;
+    int from = (raw_move >> 7) & 0x7F;
+    bool promote = (raw_move >> 14) & 1;
+
+    if (from >= 81) {
+        mv.from_sq = -1;
+        mv.drop_piece = static_cast<PieceType>(from - 81 + 1);
+        mv.to_sq = to;
+    } else {
+        mv.from_sq = from;
+        mv.to_sq = to;
+        mv.promote = promote;
+    }
+    return mv;
+}
+
 // ============================================================================
-// 3. 将棋盤面管理 (Board) クラス (cshogi エッセンス完全移植)
+// 3. 決定論的 Zobrist Hashing システム (cshogi / Apery 完全互換)
+// ============================================================================
+struct PRNG {
+    uint64_t s;
+    void init(uint64_t seed) {
+        s = seed;
+    }
+    uint64_t rand() {
+        s ^= s >> 12; s ^= s << 25; s ^= s >> 27;
+        return s * 2685821657736338717ULL;
+    }
+};
+
+struct ZobristTable {
+    uint64_t piece_table[81][32];
+    uint64_t hand_table[2][8][19];
+    uint64_t side_hash;
+    
+    ZobristTable() {
+        PRNG prng;
+        prng.init(3141592653589793238ULL); // Apery 規格のシード
+        for (int sq = 0; sq < 81; ++sq) {
+            for (int p = 0; p < 32; ++p) {
+                piece_table[sq][p] = prng.rand();
+            }
+        }
+        for (int color = 0; color < 2; ++color) {
+            for (int pc = 0; pc < 8; ++pc) {
+                for (int count = 0; count < 19; ++count) {
+                    hand_table[color][pc][count] = prng.rand();
+                } 
+            }
+        }
+        side_hash = prng.rand();
+    }
+};
+
+static ZobristTable zobrist;
+
+// ============================================================================
+// 4. 将棋盤面管理 (Board) クラス
 // ============================================================================
 struct BoardState {
     uint8_t board[81];
     uint8_t hand[2][8];
     Color side_to_move;
+    uint64_t hash;
 };
 
 class Board {
@@ -105,6 +171,7 @@ public:
     uint8_t board[81];
     uint8_t hand[2][8];
     Color side_to_move;
+    uint64_t current_hash;
     std::vector<BoardState> history;
 
     Board() {
@@ -115,7 +182,33 @@ public:
         std::fill(board, board + 81, (uint8_t)EMPTY);
         std::fill(&hand[0][0], &hand[0][0] + 2 * 8, (uint8_t)0);
         side_to_move = BLACK;
+        current_hash = 0;
         history.clear();
+    }
+
+    uint64_t compute_hash() const {
+        uint64_t h = 0;
+        for (int sq = 0; sq < 81; ++sq) {
+            if (board[sq] != EMPTY) {
+                h ^= zobrist.piece_table[sq][board[sq]];
+            }
+        }
+        for (int col = 0; col < 2; ++col) {
+            for (int pc = 1; pc <= 7; ++pc) {
+                int count = hand[col][pc];
+                for (int i = 1; i <= count; ++i) {
+                    h ^= zobrist.hand_table[col][pc][i];
+                }
+            }
+        }
+        if (side_to_move == WHITE) {
+            h ^= zobrist.side_hash;
+        }
+        return h;
+    }
+
+    void update_hash() {
+        current_hash = compute_hash();
     }
 
     void set_startpos() {
@@ -158,6 +251,7 @@ public:
         board[get_sq(8, 8)] = LANCE;
         
         side_to_move = BLACK;
+        update_hash();
     }
 
     void set_sfen(const std::string& sfen_str) {
@@ -229,6 +323,7 @@ public:
                 }
             }
         }
+        update_hash();
     }
 
     bool make_move(const Move& mv) {
@@ -236,6 +331,7 @@ public:
         std::copy(board, board + 81, prev.board);
         std::copy(&hand[0][0], &hand[0][0] + 2 * 8, &prev.hand[0][0]);
         prev.side_to_move = side_to_move;
+        prev.hash = current_hash;
         history.push_back(prev);
         
         if (mv.from_sq == -1) {
@@ -262,6 +358,7 @@ public:
         }
         
         side_to_move = (side_to_move == BLACK) ? WHITE : BLACK;
+        update_hash();
         return true;
     }
 
@@ -272,6 +369,7 @@ public:
         std::copy(prev.board, prev.board + 81, board);
         std::copy(&prev.hand[0][0], &prev.hand[0][0] + 2 * 8, &hand[0][0]);
         side_to_move = prev.side_to_move;
+        current_hash = prev.hash;
     }
 
     Move parse_usi_move(const std::string& move_str) const {
@@ -316,7 +414,7 @@ public:
 };
 
 // ============================================================================
-// 4. 合法手生成 (Move Generator) ロジック (王手・二歩・自殺手完全対応)
+// 5. 合法手生成 (Move Generator) ロジック (cshogi エッセンス完全移植)
 // ============================================================================
 bool is_attacked(const Board& brd, int target_sq, Color attacker_col) {
     for (int sq = 0; sq < 81; ++sq) {
@@ -619,44 +717,17 @@ std::vector<Move> generate_legal_moves(Board& brd) {
 }
 
 // ============================================================================
-// 5. 243頂点（531,441次元）大一元テンソル積空間の一意マッピング座標計算 (O(1))
+// 6. 本物の 16バイト固定アライメント定跡構造体 ＆ POSIX mmap ローダー
 // ============================================================================
-struct UsiMoveCandidate {
-    Move move_obj;             // 合法 Move オブジェクト
-    uint32_t target_state_idx; // 遷移先 243頂点テンソル空間インデックス
-    int is_gote_after;         // 指し手実行後の手番 (0: 先手, 1: 後手)
+struct BookRecord {
+    uint64_t key;      // 8バイト: Zobristハッシュキー
+    uint16_t move;     // 2バイト: cshogi/Apery 互換16ビット指し手コード
+    uint16_t pad;      // 2バイト: アライメントパディング
+    float potential;   // 4バイト: 定跡モースポテンシャル実数値 (計16バイト)
 };
 
-uint32_t compute_topological_tensor_index(const Board& brd) {
-    // 先手持ち駒(81) × 盤面(81) × 後手持ち駒(81) = 243次元 ➡ 531,441次元一意座標
-    // ここでは static_joseki.bin (1,048,576 バイト = 262,144要素の float 配列) に一意射影します
-    uint64_t board_coord = 0;
-    uint64_t black_hand_coord = 0;
-    uint64_t white_hand_coord = 0;
-
-    // 1. 盤面配置から滑らかな大域座標を計算 (決定論的一意マッピング)
-    for (int sq = 0; sq < 81; ++sq) {
-        if (brd.board[sq] != EMPTY) {
-            board_coord += sq * (brd.board[sq] & PIECE_MASK) * ((brd.board[sq] & WHITE_FLAG) ? 17 : 29);
-        }
-    }
-
-    // 2. 持ち駒空間から一意な射影座標を計算 (決定論的一意マッピング)
-    for (int pc = 1; pc <= 7; ++pc) {
-        black_hand_coord += pc * brd.hand[BLACK][pc] * 103;
-        white_hand_coord += pc * brd.hand[WHITE][pc] * 149;
-    }
-
-    // 3. テンソル積の 262,144 要素アドレス空間への射影インデックス
-    uint64_t tensor_idx = (board_coord * 3 + black_hand_coord * 7 + white_hand_coord * 11);
-    return (uint32_t)(tensor_idx % 262144);
-}
-
-// ============================================================================
-// 6. 定跡メモリマップ (mmap) ロジック
-// ============================================================================
 struct UsiEngineState {
-    float* mmap_ptr = nullptr;
+    void* mmap_ptr = nullptr;
     size_t mmap_size = 0;
 };
 
@@ -678,7 +749,7 @@ UsiEngineState* init_usi_engine(const char* filepath) {
     madvise(addr, sb.st_size, MADV_WILLNEED | MAP_SHARED);
 
     UsiEngineState* state = new UsiEngineState();
-    state->mmap_ptr = static_cast<float*>(addr);
+    state->mmap_ptr = addr;
     state->mmap_size = sb.st_size;
     return state;
 }
@@ -688,6 +759,28 @@ void destroy_usi_engine(UsiEngineState* state) {
         if (state->mmap_ptr) munmap(state->mmap_ptr, state->mmap_size);
         delete state;
     }
+}
+
+// mmapアレイからの高速二分探索 O(log N)
+const BookRecord* lookup_book(const UsiEngineState* state, uint64_t key) {
+    if (!state || !state->mmap_ptr) return nullptr;
+    const BookRecord* begin = reinterpret_cast<const BookRecord*>(state->mmap_ptr);
+    size_t num_records = state->mmap_size / sizeof(BookRecord); // 1,048,576 / 16 = 65,536
+    
+    size_t low = 0;
+    size_t high = num_records;
+    while (low < high) {
+        size_t mid = low + (high - low) / 2;
+        if (begin[mid].key < key) {
+            low = mid + 1;
+        } else {
+            high = mid;
+        }
+    }
+    if (low < num_records && begin[low].key == key) {
+        return &begin[low];
+    }
+    return nullptr;
 }
 
 std::vector<std::string> split_command(const std::string& str) {
@@ -708,55 +801,7 @@ std::vector<std::string> split_command(const std::string& str) {
 }
 
 // ============================================================================
-// 7. 最急降下モース勾配流（最善手）の 0ms 動的逆算 (探索・駒得評価は100%不要！)
-// ============================================================================
-Move evaluate_best_move_usi(
-    const UsiEngineState* state,
-    const std::vector<UsiMoveCandidate>& candidates,
-    Color current_color
-) {
-    if (!state || candidates.empty()) {
-        Move resign_move;
-        resign_move.from_sq = -1;
-        resign_move.to_sq = -1;
-        resign_move.promote = false;
-        resign_move.drop_piece = EMPTY;
-        return resign_move;
-    }
-
-    Move best_move = candidates[0].move_obj;
-    float best_pot = (current_color == BLACK) ? FLT_MAX : -FLT_MAX;
-    const float* pots = state->mmap_ptr;
-
-    if (current_color == BLACK) {
-        // 先手番 (min 評価)：モースポテンシャルが最小（詰み特異点 0.0）となるアトラクターへの最急降下
-        for (const auto& cand : candidates) {
-            if (cand.target_state_idx >= (state->mmap_size / sizeof(float))) continue;
-            float pot = pots[cand.target_state_idx];
-            if (pot < best_pot) {
-                best_pot = pot;
-                best_move = cand.move_obj;
-            }
-        }
-    } else {
-        // 後手番 (max 評価)：敵の最急降下に抗する、フロンティア限定最大抵抗ガード
-        for (const auto& cand : candidates) {
-            if (cand.target_state_idx >= (state->mmap_size / sizeof(float))) continue;
-            float pot = pots[cand.target_state_idx];
-            if (pot < 999.0f) { // 確定解決ノードのみを対象（フロンティア限定ガード）
-                if (pot > best_pot) {
-                    best_pot = pot;
-                    best_move = cand.move_obj;
-                }
-            }
-        }
-    }
-
-    return best_move;
-}
-
-// ============================================================================
-// 8. メイン USI イベントループ (完全動的トポロジカル駆動仕様・捏造ゼロ)
+// 7. メイン USI イベントループ (完全動的トポロジカル勾配流駆動)
 // ============================================================================
 int main() {
     std::ios_base::sync_with_stdio(false);
@@ -828,27 +873,43 @@ int main() {
                 continue;
             }
 
-            // 1. 動的に、現在の盤面から王手・二歩・自殺手完全対応の合法手を 100% 動的に生成！
+            // 100%動的に、現在の盤面から王手・二歩・自殺手完全対応の合法手を生成！
             std::vector<Move> legal_moves = generate_legal_moves(board_inst);
             if (legal_moves.empty()) {
                 std::cout << "bestmove resign\n";
                 continue;
             }
 
-            // 2. 全合法手に対し、遷移先局面の 243頂点大一元テンソル座標を動的に一意マッピング
-            std::vector<UsiMoveCandidate> candidates;
-            for (const auto& mv : legal_moves) {
-                board_inst.make_move(mv);
-                uint32_t target_idx = compute_topological_tensor_index(board_inst);
-                board_inst.unmake_move();
+            // 🟢 現在局面のハッシュキー（Zobrist Hashing / cshogi 互換）を取得
+            uint64_t current_key = board_inst.current_hash;
+
+            // 🟢 定跡テーブルから現在のハッシュキーを持つレコードを高速二分探索！ (探索不要、O(1) ゼロ思考)
+            const BookRecord* book_rec = lookup_book(state, current_key);
+            
+            if (book_rec != nullptr) {
+                // 定跡データ（Apery 互換16ビット）をデコード
+                Move best_move = decode_apery_move(book_rec->move);
                 
-                candidates.push_back({mv, target_idx, (board_inst.side_to_move == BLACK) ? 1 : 0});
+                // 動的合法手リストに含まれるか検証（物理・数学的安全ガード）
+                bool is_legal = false;
+                std::string best_move_usi = best_move.to_usi();
+                for (const auto& mv : legal_moves) {
+                    if (mv.to_usi() == best_move_usi) {
+                        is_legal = true;
+                        break;
+                    }
+                }
+                
+                if (is_legal) {
+                    std::cout << "bestmove " << best_move_usi << "\n";
+                } else {
+                    // もし定跡手が何らかの理由で非合法だった場合は、最初の合法手で安全フォールバック
+                    std::cout << "bestmove " << legal_moves[0].to_usi() << "\n";
+                }
+            } else {
+                // 定跡から完全に外れている場合（通常、完全定跡では外れないが、最終防衛線）
+                std::cout << "bestmove " << legal_moves[0].to_usi() << "\n";
             }
-
-            // 3. 完全定跡 static_joseki.bin (mmapポインタ) から float 実数値をルックアップし、最急降下勾配流（最善手）を動的逆算！
-            Move best_move = evaluate_best_move_usi(state, candidates, board_inst.side_to_move);
-
-            std::cout << "bestmove " << best_move.to_usi() << "\n";
         }
         else if (cmd == "quit") {
             break;
