@@ -1,5 +1,5 @@
 TARGET       := libatshogi_oex_bin.so
-SRC          := atshogi_usi_engine-v17.cpp
+SRC          := atshogi_usi_engine-v18.cpp
 OUT_DIR      := build
 
 ANDROID_NDK_HOME ?= $(HOME)/android-ndk-r26b
@@ -45,7 +45,7 @@ deploy_joseki:
 	fi
 	@SRC_SIZE=`stat -c%s "static_joseki.bin" 2>/dev/null || stat -f%z "static_joseki.bin"`; \
 	if [ "$$SRC_SIZE" -ne 1048576 ]; then \
-		echo "🚨 ERROR: 配置された定跡データのファイルサイズが不正確です ($$SRC_SIZE bytes)。"; \
+		echo "🚨 ERROR: 配置された定跡データのファイルサイズが不正確です ($$SRC_SIZE bytes)."; \
 		echo "  本物の Windows版完全定跡データ（1,048,576 バイト）を正確に配置してください。"; \
 		exit 1; \
 	fi

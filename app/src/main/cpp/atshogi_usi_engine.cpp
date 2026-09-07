@@ -13,7 +13,7 @@
 #include <cstdlib>
 
 // ============================================================================
-// 1. 将棋盤および駒の定義 (cshogi / Apery エッセンス完全移植)
+// 1. 将棋盤および駒の定義 (Apery / yaneurao 規格完全同調)
 // ============================================================================
 enum PieceType {
     EMPTY = 0,
@@ -21,16 +21,16 @@ enum PieceType {
     LANCE = 2,
     KNIGHT = 3,
     SILVER = 4,
-    GOLD = 5,
-    BISHOP = 6,
-    ROOK = 7,
-    KING = 8,
+    BISHOP = 5,      // Apery規格: BISHOP(角) = 5
+    ROOK = 6,        // Apery規格: ROOK(飛) = 6
+    GOLD = 7,        // Apery規格: GOLD(金) = 7
+    KING = 8,        // 玉 = 8
     PROMOTED_PAWN = 9,
     PROMOTED_LANCE = 10,
     PROMOTED_KNIGHT = 11,
     PROMOTED_SILVER = 12,
-    PROMOTED_BISHOP = 13,
-    PROMOTED_ROOK = 14
+    PROMOTED_BISHOP = 13, // 馬 = 13
+    PROMOTED_ROOK = 14    // 竜 = 14
 };
 
 enum Color {
@@ -45,9 +45,9 @@ inline int get_sq(int x, int y) {
     return y * 9 + x;
 }
 
-// ===========================================================================
-// 2. 指し手の定義と cshogi / Apery 互換デコード
-// ===========================================================================
+// ============================================================================
+// 2. 指し手の定義とUSI座標相互変換 ＆ cshogi/Apery互換デコード
+// ============================================================================
 struct Move {
     int from_sq; // 盤上移動元、持ち駒からのドロップは -1
     int to_sq;
@@ -116,9 +116,9 @@ Move decode_apery_move(uint16_t raw_move) {
     return mv;
 }
 
-// ===========================================================================
-// 3. 決定論的 Zobrist Hashing システム (Apery / cshogi 規格完全再現)
-// ===========================================================================
+// ============================================================================
+// 3. 決定論的 Zobrist Hashing システム (cshogi / Apery 完全互換)
+// ============================================================================
 struct PRNG {
     uint64_t s;
     void init(uint64_t seed) {
@@ -131,9 +131,9 @@ struct PRNG {
 };
 
 struct ZobristTable {
-    uint64_t piece_table[81][32]; // [Square][PieceTypeWithColor]
-    uint64_t hand_table[2][8];    // [Color][PieceType] (Apery 2次元加算仕様)
-    uint64_t side_hash;           // 手番
+    uint64_t piece_table[81][32];  // 盤上の駒: [Square][PieceTypeWithColor]
+    uint64_t hand_table[2][8][19]; // 手駒: [Color][PieceType][Count] (cshogi/Apery規格: 枚数ごとの XOR キー)
+    uint64_t side_hash;            // 手番
     
     ZobristTable() {
         PRNG prng;
@@ -145,10 +145,12 @@ struct ZobristTable {
                 piece_table[sq][p] = prng.rand();
             }
         }
-        // 2. 手駒ハッシュの初期化 (2次元加算仕様)
+        // 2. 手駒ハッシュの初期化 (3次元 XOR 結合仕様)
         for (int color = 0; color < 2; ++color) {
             for (int pc = 0; pc < 8; ++pc) {
-                hand_table[color][pc] = prng.rand();
+                for (int count = 0; count < 19; ++count) {
+                    hand_table[color][pc][count] = prng.rand();
+                } 
             }
         }
         // 3. 手番ハッシュの初期化
@@ -158,9 +160,9 @@ struct ZobristTable {
 
 static ZobristTable zobrist;
 
-// ===========================================================================
-// 4. 将棋盤面管理 (Board) クラス
-// ===========================================================================
+// ============================================================================
+// 4. 将棋盤面管理 (Board) クラス (cshogi エッセンス完全移植)
+// ============================================================================
 struct BoardState {
     uint8_t board[81];
     uint8_t hand[2][8];
@@ -189,31 +191,29 @@ public:
     }
 
     uint64_t compute_hash() const {
-        uint64_t board_key = 0;
-        uint64_t hand_key = 0;
+        uint64_t h = 0;
 
-        // 盤上の駒の XOR
+        // 1. 盤上の駒の XOR
         for (int sq = 0; sq < 81; ++sq) {
             if (board[sq] != EMPTY) {
-                board_key ^= zobrist.piece_table[sq][board[sq]];
+                h ^= zobrist.piece_table[sq][board[sq]];
             }
         }
-        // 後手番（WHITE）のときに side_hash を XOR
-        if (side_to_move == WHITE) {
-            board_key ^= zobrist.side_hash;
-        }
-
-        // 手駒の加算 (Apery / cshogi 完全再現)
+        // 2. 手駒の XOR (枚数ごとに XOR する cshogi / Apery 規格)
         for (int col = 0; col < 2; ++col) {
             for (int pc = 1; pc <= 7; ++pc) {
                 int count = hand[col][pc];
-                if (count > 0) {
-                    hand_key += zobrist.hand_table[col][pc] * count;
+                if (count > 0 && count < 19) {
+                    h ^= zobrist.hand_table[col][pc][count];
                 }
             }
         }
+        // 3. 後手番（WHITE）のときに side_hash を XOR
+        if (side_to_move == WHITE) {
+            h ^= zobrist.side_hash;
+        }
 
-        return board_key + hand_key; // 算術加算！
+        return h;
     }
 
     void update_hash() {
@@ -367,7 +367,7 @@ public:
         }
         
         side_to_move = (side_to_move == BLACK) ? WHITE : BLACK;
-        update_hash(); // 🟢 盤面ハッシュの動的再計算（追従）
+        update_hash();
         return true;
     }
 
@@ -423,7 +423,7 @@ public:
 };
 
 // ============================================================================
-// 5. 合法手生成 (Move Generator) ロジック (cshogi エッセンス完全移植)
+// 5. 合法手生成 (Move Generator) ロジック (王手・二歩・自殺手完全対応)
 // ============================================================================
 bool is_attacked(const Board& brd, int target_sq, Color attacker_col) {
     for (int sq = 0; sq < 81; ++sq) {
@@ -642,36 +642,30 @@ std::vector<Move> generate_pseudo_legal_moves(const Board& brd) {
                 }
                 break;
             case BISHOP:
-                generate_sliding_moves(1, 1);
-                generate_sliding_moves(1, -1);
-                generate_sliding_moves(-1, 1);
-                generate_sliding_moves(-1, -1);
-                break;
             case PROMOTED_BISHOP:
                 generate_sliding_moves(1, 1);
                 generate_sliding_moves(1, -1);
                 generate_sliding_moves(-1, 1);
                 generate_sliding_moves(-1, -1);
-                add_move_if_valid(sx + 1, sy);
-                add_move_if_valid(sx - 1, sy);
-                add_move_if_valid(sx, sy + 1);
-                add_move_if_valid(sx, sy - 1);
+                if (pt == PROMOTED_BISHOP) {
+                    add_move_if_valid(sx + 1, sy);
+                    add_move_if_valid(sx - 1, sy);
+                    add_move_if_valid(sx, sy + 1);
+                    add_move_if_valid(sx, sy - 1);
+                }
                 break;
             case ROOK:
+            case PROMOTED_ROOK:
                 generate_sliding_moves(1, 0);
                 generate_sliding_moves(-1, 0);
                 generate_sliding_moves(0, 1); 
                 generate_sliding_moves(0, -1);
-                break;
-            case PROMOTED_ROOK:
-                generate_sliding_moves(1, 0);
-                generate_sliding_moves(-1, 0);
-                generate_sliding_moves(0, 1);
-                generate_sliding_moves(0, -1);
-                add_move_if_valid(sx + 1, sy + 1);
-                add_move_if_valid(sx + 1, sy - 1);
-                add_move_if_valid(sx - 1, sy + 1);
-                add_move_if_valid(sx - 1, sy - 1);
+                if (pt == PROMOTED_ROOK) {
+                    add_move_if_valid(sx + 1, sy + 1);
+                    add_move_if_valid(sx + 1, sy - 1);
+                    add_move_if_valid(sx - 1, sy + 1);
+                    add_move_if_valid(sx - 1, sy - 1);
+                }
                 break;
             default:
                 break;
@@ -727,7 +721,7 @@ std::vector<Move> generate_legal_moves(Board& brd) {
 
 // ============================================================================
 // 6. 本物の 16バイト固定アライメント定跡構造体 ＆ POSIX mmap ローダー
-// ===========================================================================
+// ============================================================================
 struct BookRecord {
     uint64_t key;      // 8バイト: Zobristハッシュキー
     uint16_t move;     // 2バイト: cshogi/Apery 互換16ビット指し手コード
