@@ -21,9 +21,9 @@ enum PieceType {
     LANCE = 2,
     KNIGHT = 3,
     SILVER = 4,
-    GOLD = 5,
-    BISHOP = 6,
-    ROOK = 7,
+    BISHOP = 5,
+    ROOK = 6,
+    GOLD = 7,
     KING = 8,
     PROMOTED_PAWN = 9,
     PROMOTED_LANCE = 10,
@@ -67,19 +67,19 @@ struct Move {
                 case ROOK: p_char = 'R'; break;
                 default: break;
             }
-            int tx = to_sq % 9;
-            int ty = to_sq / 9;
-            char cx = '9' - tx;
+            int tx = to_sq / 9; // file
+            int ty = to_sq % 9; // rank
+            char cx = '1' + tx;
             char cy = 'a' + ty;
             return std::string(1, p_char) + "*" + cx + cy;
         } else {
-            int fx = from_sq % 9;
-            int fy = from_sq / 9;
-            int tx = to_sq % 9;
-            int ty = to_sq / 9;
-            char cfx = '9' - fx;
+            int fx = from_sq / 9; // file
+            int fy = from_sq % 9; // rank
+            int tx = to_sq / 9;   // file
+            int ty = to_sq % 9;   // rank
+            char cfx = '1' + fx;
             char cfy = 'a' + fy;
-            char ctx = '9' - tx;
+            char ctx = '1' + tx;
             char cty = 'a' + ty;
             std::string res = "";
             res += cfx;
@@ -132,26 +132,24 @@ struct PRNG {
 
 struct ZobristTable {
     uint64_t piece_table[81][32]; // [Square][PieceTypeWithColor]
-    uint64_t hand_table[2][8];    // [Color][PieceType] (Apery 2次元加算仕様)
-    uint64_t side_hash;           // 手番
+    uint64_t hand_table[2][8][19];
+    uint64_t side_hash;
     
     ZobristTable() {
         PRNG prng;
-        prng.init(3141592653589793238ULL); // Apery 規格の絶対シード
-        
-        // 1. 盤上の駒ハッシュの初期化
+        prng.init(3141592653589793238ULL); // Apery 規格のシード値
         for (int sq = 0; sq < 81; ++sq) {
             for (int p = 0; p < 32; ++p) {
                 piece_table[sq][p] = prng.rand();
             }
         }
-        // 2. 手駒ハッシュの初期化 (2次元加算仕様)
         for (int color = 0; color < 2; ++color) {
             for (int pc = 0; pc < 8; ++pc) {
-                hand_table[color][pc] = prng.rand();
+                for (int count = 0; count < 19; ++count) {
+                    hand_table[color][pc][count] = prng.rand();
+                } 
             }
         }
-        // 3. 手番ハッシュの初期化
         side_hash = prng.rand();
     }
 };
@@ -189,31 +187,24 @@ public:
     }
 
     uint64_t compute_hash() const {
-        uint64_t board_key = 0;
-        uint64_t hand_key = 0;
-
-        // 盤上の駒の XOR
+        uint64_t h = 0;
         for (int sq = 0; sq < 81; ++sq) {
             if (board[sq] != EMPTY) {
-                board_key ^= zobrist.piece_table[sq][board[sq]];
+                h ^= zobrist.piece_table[sq][board[sq]];
             }
         }
-        // 後手番（WHITE）のときに side_hash を XOR
-        if (side_to_move == WHITE) {
-            board_key ^= zobrist.side_hash;
-        }
-
-        // 手駒の加算 (Apery / cshogi 完全再現)
         for (int col = 0; col < 2; ++col) {
             for (int pc = 1; pc <= 7; ++pc) {
                 int count = hand[col][pc];
                 if (count > 0) {
-                    hand_key += zobrist.hand_table[col][pc] * count;
+                    h ^= zobrist.hand_table[col][pc][count];
                 }
             }
         }
-
-        return board_key + hand_key; // 算術加算！
+        if (side_to_move == WHITE) {
+            h ^= zobrist.side_hash;
+        }
+        return h;
     }
 
     void update_hash() {
@@ -222,42 +213,42 @@ public:
 
     void set_startpos() {
         clear();
-        // 1段目 (後手)
-        board[get_sq(0, 0)] = LANCE | WHITE_FLAG;
-        board[get_sq(1, 0)] = KNIGHT | WHITE_FLAG;
-        board[get_sq(2, 0)] = SILVER | WHITE_FLAG;
-        board[get_sq(3, 0)] = GOLD | WHITE_FLAG;
-        board[get_sq(4, 0)] = KING | WHITE_FLAG;
-        board[get_sq(5, 0)] = GOLD | WHITE_FLAG;
-        board[get_sq(6, 0)] = SILVER | WHITE_FLAG;
-        board[get_sq(7, 0)] = KNIGHT | WHITE_FLAG;
-        board[get_sq(8, 0)] = LANCE | WHITE_FLAG;
+        // 1段目 (後手) rank = 0
+        board[get_sq(8, 0)] = LANCE | WHITE_FLAG;  // 9一
+        board[get_sq(7, 0)] = KNIGHT | WHITE_FLAG; // 8一
+        board[get_sq(6, 0)] = SILVER | WHITE_FLAG; // 7一
+        board[get_sq(5, 0)] = GOLD | WHITE_FLAG;   // 6一
+        board[get_sq(4, 0)] = KING | WHITE_FLAG;   // 5一
+        board[get_sq(3, 0)] = GOLD | WHITE_FLAG;   // 4一
+        board[get_sq(2, 0)] = SILVER | WHITE_FLAG; // 3一
+        board[get_sq(1, 0)] = KNIGHT | WHITE_FLAG; // 2一
+        board[get_sq(0, 0)] = LANCE | WHITE_FLAG;  // 1一
         
-        board[get_sq(1, 1)] = ROOK | WHITE_FLAG;
-        board[get_sq(7, 1)] = BISHOP | WHITE_FLAG;
+        board[get_sq(7, 1)] = ROOK | WHITE_FLAG;   // 8二
+        board[get_sq(1, 1)] = BISHOP | WHITE_FLAG; // 2二
         
         for (int x = 0; x < 9; ++x) {
-            board[get_sq(x, 2)] = PAWN | WHITE_FLAG;
+            board[get_sq(x, 2)] = PAWN | WHITE_FLAG; // 三段目
         }
         
-        // 7段目 (先手)
+        // 7段目 (先手) rank = 6
         for (int x = 0; x < 9; ++x) {
             board[get_sq(x, 6)] = PAWN;
         }
         
-        board[get_sq(1, 7)] = BISHOP;
-        board[get_sq(7, 7)] = ROOK;
+        board[get_sq(7, 7)] = BISHOP; // 8八
+        board[get_sq(1, 7)] = ROOK;   // 2八
         
-        // 9段目 (先手)
-        board[get_sq(0, 8)] = LANCE;
-        board[get_sq(1, 8)] = KNIGHT;
-        board[get_sq(2, 8)] = SILVER;
-        board[get_sq(3, 8)] = GOLD;
-        board[get_sq(4, 8)] = KING;
-        board[get_sq(5, 8)] = GOLD;
-        board[get_sq(6, 8)] = SILVER;
-        board[get_sq(7, 8)] = KNIGHT;
-        board[get_sq(8, 8)] = LANCE;
+        // 9段目 (先手) rank = 8
+        board[get_sq(8, 8)] = LANCE;  // 9九
+        board[get_sq(7, 8)] = KNIGHT; // 8九
+        board[get_sq(6, 8)] = SILVER; // 7九
+        board[get_sq(5, 8)] = GOLD;   // 6九
+        board[get_sq(4, 8)] = KING;   // 5九
+        board[get_sq(3, 8)] = GOLD;   // 4九
+        board[get_sq(2, 8)] = SILVER; // 3九
+        board[get_sq(1, 8)] = KNIGHT; // 2九
+        board[get_sq(0, 8)] = LANCE;  // 1九
         
         side_to_move = BLACK;
         update_hash();
@@ -300,7 +291,7 @@ public:
                     promote_next = true;
                     continue;
                 }
-                board[get_sq(x, y)] = pt | (is_white ? WHITE_FLAG : 0);
+                board[get_sq(8 - x, y)] = pt | (is_white ? WHITE_FLAG : 0);
                 x++;
             }
         }
@@ -404,13 +395,13 @@ public:
                 default: break;
             }
             mv.drop_piece = pt;
-            int tx = '9' - move_str[2];
+            int tx = move_str[2] - '1';
             int ty = move_str[3] - 'a';
             mv.to_sq = get_sq(tx, ty);
         } else {
-            int fx = '9' - move_str[0];
+            int fx = move_str[0] - '1';
             int fy = move_str[1] - 'a';
-            int tx = '9' - move_str[2];
+            int tx = move_str[2] - '1';
             int ty = move_str[3] - 'a';
             mv.from_sq = get_sq(fx, fy);
             mv.to_sq = get_sq(tx, ty);
